@@ -713,33 +713,6 @@ You can download the PDF and Epub version of this repository from the latest run
 
    **[⬆ Back to Top](#table-of-contents)**
     
-16. ### What are synthetic events in React?
-
-    `SyntheticEvent` is a cross-browser wrapper around the browser's native event. Its API is same as the browser's native event, including `stopPropagation()` and `preventDefault()`, except the events work identically across all browsers.
-
-
-   **[⬆ Back to Top](#table-of-contents)**
-    
-17. ### What are inline conditional expressions?
-
-    You can use either *if statements* or *ternary expressions* which are available from JS to conditionally render expressions. Apart from these approaches, you can also embed any expressions in JSX by wrapping them in curly braces and then followed by JS logical operator `&&`.
-
-    ```jsx harmony
-    <h1>Hello!</h1>
-    {
-        messages.length > 0 && !isLogin?
-          <h2>
-              You have {messages.length} unread messages.
-          </h2>
-          :
-          <h2>
-              You don't have unread messages.
-          </h2>
-    }
-    ```
-
-
-   **[⬆ Back to Top](#table-of-contents)**
     
 18. ### What is "key" prop and what is the benefit of using it in arrays of elements?
 
