@@ -637,83 +637,6 @@ You can download the PDF and Epub version of this repository from the latest run
 
    **[⬆ Back to Top](#table-of-contents)**
     
-14. ### How to bind methods or event handlers in JSX callbacks?
-
-    There are 3 possible ways to achieve this:
-
-    1.	**Binding in Constructor:** In JavaScript classes, the methods are not bound by default. The same thing applies for React event handlers defined as class methods. Normally we bind them in constructor.
-
-        ```javascript
-        class Foo extends Component {
-          constructor(props) {
-            super(props);
-            this.handleClick = this.handleClick.bind(this);
-          }
-          handleClick() {
-            console.log('Click happened');
-          }
-          render() {
-            return <button onClick={this.handleClick}>Click Me</button>;
-          }
-        }
-
-        ```
-
-    2. **Public class fields syntax:** If you don't like to use bind approach then *public class fields syntax* can be used to correctly bind callbacks.
-
-        ```jsx harmony
-        handleClick = () => {
-          console.log('this is:', this)
-        }
-        ```
-
-        ```jsx harmony
-        <button onClick={this.handleClick}>
-          {'Click me'}
-        </button>
-        ```
-
-    3. **Arrow functions in callbacks:** You can use *arrow functions* directly in the callbacks.
-
-        ```jsx harmony
-        handleClick() {
-            console.log('Click happened');
-        }
-        render() {
-            return <button onClick={() => this.handleClick()}>Click Me</button>;
-        }
-        ```
-
-    **Note:** If the callback is passed as prop to child components, those components might do an extra re-rendering. In those cases, it is preferred to go with `.bind()` or *public class fields syntax* approach considering performance.
-
-
-   **[⬆ Back to Top](#table-of-contents)**
-    
-15. ### How to pass a parameter to an event handler or callback?
-
-    You can use an *arrow function* to wrap around an *event handler* and pass parameters:
-
-    ```jsx harmony
-    <button onClick={() => this.handleClick(id)} />
-    ```
-
-    This is an equivalent to calling `.bind`:
-
-    ```jsx harmony
-    <button onClick={this.handleClick.bind(this, id)} />
-    ```
-    Apart from these two approaches, you can also pass arguments to a function which is defined as arrow function
-    ```jsx harmony
-    <button onClick={this.handleClick(id)} />
-    handleClick = (id) => () => {
-        console.log("Hello, your ticket number is", id)
-    };
-    ```
-
-
-   **[⬆ Back to Top](#table-of-contents)**
-    
-    
 18. ### What is "key" prop and what is the benefit of using it in arrays of elements?
 
     A `key` is a special string attribute you **should** include when creating arrays of elements. *Key* prop helps React identify which items have changed, are added, or are removed.
@@ -755,49 +678,31 @@ You can download the PDF and Epub version of this repository from the latest run
    **[⬆ Back to Top](#table-of-contents)**
     
 20. ### How to create refs?
-
-    There are two approaches
-    1. This is a recently added approach. *Refs* are created using `React.createRef()` method and attached to React elements via the `ref` attribute. In order to use *refs* throughout the component, just assign the *ref* to the instance property within constructor.
-
-        ```jsx harmony
-        class MyComponent extends React.Component {
-          constructor(props) {
-            super(props)
-            this.myRef = React.createRef()
-          }
-          render() {
-            return <div ref={this.myRef} />
-          }
-        }
-        ```
-    2. You can also use ref callbacks approach regardless of React version. For example, the search bar component's input element is accessed as follows,
-        ```jsx harmony
-        class SearchBar extends Component {
-           constructor(props) {
-              super(props);
-              this.txtSearch = null;
-              this.state = { term: '' };
-              this.setInputSearchRef = e => {
-                 this.txtSearch = e;
-              }
-           }
-           onInputChange(event) {
-              this.setState({ term: this.txtSearch.value });
-           }
-           render() {
-              return (
-                 <input
-                    value={this.state.term}
-                    onChange={this.onInputChange.bind(this)}
-                    ref={this.setInputSearchRef} />
-              );
-           }
-        }
-        ```
-
     You can also use *refs* in function components using **closures**.
     **Note**: You can also use inline ref callbacks even though it is not a recommended approach.
+    
+          function CustomTextInput(props) {
+              const textInput = useRef(null);
+  
+           function handleClick() {
+             textInput.current.focus();
+            }
+       
+          return (
+            <div>
+             <input
+             type="text"
+             ref={textInput} />
+              <input
+             type="button"
+             value="Focus the text input"
+              onClick={handleClick}
+             />
+          </div>
+            );
+          }
 
+   
    **[⬆ Back to Top](#table-of-contents)**
     
 21. ### What are forward refs?
