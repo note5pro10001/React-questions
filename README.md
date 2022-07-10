@@ -3310,44 +3310,6 @@ You can download the PDF and Epub version of this repository from the latest run
 
    **[⬆ Back to Top](#table-of-contents)**
     
-217. ### What are HOC factory implementations?
-     There are two main ways of implementing HOCs in React.
-
-     1. Props Proxy (PP) and
-     2. Inheritance Inversion (II).
-
-     But they follow different approaches for manipulating the *WrappedComponent*.
-
-     **Props Proxy**
-
-     In this approach, the render method of the HOC returns a React Element of the type of the WrappedComponent. We also pass through the props that the HOC receives, hence the name **Props Proxy**.
-
-     ```jsx
-
-     function ppHOC(WrappedComponent) {
-      return class PP extends React.Component {
-        render() {
-          return <WrappedComponent {...this.props}/>
-        }
-      }
-     }
-     ```
-     **Inheritance Inversion**
-
-     In this approach, the returned HOC class (Enhancer) extends the WrappedComponent. It is called Inheritance Inversion because instead of the WrappedComponent extending some Enhancer class, it is passively extended by the Enhancer. In this way the relationship between them seems **inverse**.
-
-     ```jsx
-     function iiHOC(WrappedComponent) {
-      return class Enhancer extends WrappedComponent {
-        render() {
-          return super.render()
-        }
-      }
-     }
-     ```
-
-   **[⬆ Back to Top](#table-of-contents)**
-    
 218. ### How to pass numbers to React component?
 
      You should be passing the numbers via curly braces({}) where as strings in quotes
@@ -3371,22 +3333,6 @@ You can download the PDF and Epub version of this repository from the latest run
 
    **[⬆ Back to Top](#table-of-contents)**
     
-220. ### What is the purpose of registerServiceWorker in React?
-
-     React creates a service worker for you without any configuration by default. The service worker is a web API that helps you cache your assets and other files so that when the user is offline or on a slow network, he/she can still see results on the screen, as such, it helps you build a better user experience, that's what you should know about service worker for now. It's all about adding offline capabilities to your site.
-
-     ```jsx
-        import React from 'react';
-        import ReactDOM from 'react-dom';
-        import App from './App';
-        import registerServiceWorker from './registerServiceWorker';
-
-        ReactDOM.render(<App />, document.getElementById('root'));
-        registerServiceWorker();
-     ```
-
-   **[⬆ Back to Top](#table-of-contents)**
-    
 221. ### What is React memo function?
 
      Class components can be restricted from re-rendering when their input props are the same using **PureComponent or shouldComponentUpdate**. Now you can do the same with function components by wrapping them in **React.memo**.
@@ -3395,24 +3341,6 @@ You can download the PDF and Epub version of this repository from the latest run
       /* only rerenders if props change */
      });
      ```
-
-   **[⬆ Back to Top](#table-of-contents)**
-    
-222. ### What is React lazy function?
-     The `React.lazy` function lets you render a dynamic import as a regular component. It will automatically load the bundle containing the `OtherComponent` when the component gets rendered. This must return a Promise which resolves to a module with a default export containing a React component.
-     ```jsx
-     const OtherComponent = React.lazy(() => import('./OtherComponent'));
-
-     function MyComponent() {
-      return (
-        <div>
-          <OtherComponent />
-        </div>
-      );
-     }
-     ```
-     **Note:**
-     `React.lazy` and `Suspense` is not yet available for server-side rendering. If you want to do code-splitting in a server rendered app, we still recommend React Loadable.
 
    **[⬆ Back to Top](#table-of-contents)**
     
@@ -3676,23 +3604,6 @@ You can download the PDF and Epub version of this repository from the latest run
 
    **[⬆ Back to Top](#table-of-contents)**
     
-236. ### What is the proper placement for error boundaries?
-     The granularity of error boundaries usage is up to the developer based on project needs. You can follow either of these approaches,
-     1. You can wrap top-level route components to display a generic error message for the entire application.
-     2. You can also wrap individual components in an error boundary to protect them from crashing the rest of the application.
-
-   **[⬆ Back to Top](#table-of-contents)**
-    
-237. ### What is the benefit of component stack trace from error boundary?
-     Apart from error messages and javascript stack, React16 will display the component stack trace with file names and line numbers using error boundary concept.
-
-     For example, BuggyCounter component displays the component stack trace as below,
-
-     ![stacktrace](images/error_boundary.png)
-
-
-   **[⬆ Back to Top](#table-of-contents)**
-    
 238. ### What is the required method to be defined for a class component?
      The `render()` method is the only required method in a class component. i.e, All methods other than render method are optional for a class component.
 
@@ -3763,39 +3674,6 @@ You can download the PDF and Epub version of this repository from the latest run
 
    **[⬆ Back to Top](#table-of-contents)**
     
-244. ### What is the purpose of getDerivedStateFromError?
-     This lifecycle method is invoked after an error has been thrown by a descendant component. It receives the error that was thrown as a parameter and should return a value to update state.
-
-     The signature of the lifecycle method is as follows,
-     ```javascript
-     static getDerivedStateFromError(error)
-     ```
-     Let us take error boundary use case with the above lifecycle method for demonstration purpose,
-     ```javascript
-     class ErrorBoundary extends React.Component {
-       constructor(props) {
-         super(props);
-         this.state = { hasError: false };
-       }
-
-       static getDerivedStateFromError(error) {
-         // Update state so the next render will show the fallback UI.
-         return { hasError: true };
-       }
-
-       render() {
-         if (this.state.hasError) {
-           // You can render any custom fallback UI
-           return <h1>Something went wrong.</h1>;
-         }
-
-         return this.props.children;
-       }
-     }
-     ```
-
-   **[⬆ Back to Top](#table-of-contents)**
-    
 245. ### What is the methods order when component re-rendered?
      An update can be caused by changes to props or state. The below methods are called in the following order when a component is being re-rendered.
 
@@ -3836,16 +3714,6 @@ You can download the PDF and Epub version of this repository from the latest run
     
 248. ### What is the browser support for react applications?
      React supports all popular browsers, including Internet Explorer 9 and above, although some polyfills are required for older browsers such as IE 9 and IE 10. If you use  **es5-shim and es5-sham** polyfill then it even support old browsers that doesn't support ES5 methods.
-
-   **[⬆ Back to Top](#table-of-contents)**
-    
-249. ### What is the purpose of unmountComponentAtNode method?
-     This method is available from react-dom package and it removes a mounted React component from the DOM and clean up its event handlers and state. If no component was mounted in the container, calling this function does nothing. Returns true if a component was unmounted and false if there was no component to unmount.
-
-     The method signature would be as follows,
-     ```javascript
-     ReactDOM.unmountComponentAtNode(container)
-     ```
 
    **[⬆ Back to Top](#table-of-contents)**
     
@@ -3934,93 +3802,6 @@ You can download the PDF and Epub version of this repository from the latest run
      <input readOnly={true} />  // Just like node.readOnly DOM API
      ```
      These props work similarly to the corresponding HTML attributes, with the exception of the special cases. It also support all SVG attributes.
-
-   **[⬆ Back to Top](#table-of-contents)**
-    
-254. ### What are the limitations with HOCs?
-
-     Higher-order components come with a few caveats apart from its benefits. Below are the few listed in an order,
-     1. **Don’t use HOCs inside the render method:**
-        It is not recommended to apply a HOC to a component within the render method of a component.
-        ```javascript
-        render() {
-          // A new version of EnhancedComponent is created on every render
-          // EnhancedComponent1 !== EnhancedComponent2
-          const EnhancedComponent = enhance(MyComponent);
-          // That causes the entire subtree to unmount/remount each time!
-          return <EnhancedComponent />;
-        }
-        ```
-        The above code impacts on performance by remounting a component that causes the state of that component and all of its children to be lost. Instead, apply HOCs outside the component definition so that the resulting component is created only once.
-
-     2. **Static methods must be copied over:**
-        When you apply a HOC to a component the new component does not have any of the static methods of the original component
-        ```javascript
-        // Define a static method
-        WrappedComponent.staticMethod = function() {/*...*/}
-        // Now apply a HOC
-        const EnhancedComponent = enhance(WrappedComponent);
-
-        // The enhanced component has no static method
-        typeof EnhancedComponent.staticMethod === 'undefined' // true
-        ```
-        You can overcome this by copying the methods onto the container before returning it,
-
-        ```javascript
-        function enhance(WrappedComponent) {
-          class Enhance extends React.Component {/*...*/}
-          // Must know exactly which method(s) to copy :(
-          Enhance.staticMethod = WrappedComponent.staticMethod;
-          return Enhance;
-        }
-        ```
-     3. **Refs aren’t passed through:**
-        For HOCs you need to pass through all props to the wrapped component but this does not work for refs. This is because ref is not really a prop similar to key. In this case you need to use the React.forwardRef API
-
-   **[⬆ Back to Top](#table-of-contents)**
-    
-255. ### How to debug forwardRefs in DevTools?
-
-     **React.forwardRef** accepts a render function as parameter and DevTools uses this function to determine what to display for the ref forwarding component.
-
-     For example, If you don't name the render function or not using displayName property then it will appear as ”ForwardRef” in the DevTools,
-
-     ```javascript
-     const WrappedComponent = React.forwardRef((props, ref) => {
-       return <LogProps {...props} forwardedRef={ref} />;
-     });
-     ```
-
-     But If you name the render function then it will appear as **”ForwardRef(myFunction)”**
-
-     ```javascript
-     const WrappedComponent = React.forwardRef(
-       function myFunction(props, ref) {
-         return <LogProps {...props} forwardedRef={ref} />;
-       }
-     );
-     ```
-
-     As an alternative, You can also set displayName property for forwardRef function,
-
-     ```javascript
-     function logProps(Component) {
-       class LogProps extends React.Component {
-         // ...
-       }
-
-       function forwardRef(props, ref) {
-         return <LogProps {...props} forwardedRef={ref} />;
-       }
-
-       // Give this component a more helpful display name in DevTools.
-       // e.g. "ForwardRef(logProps(MyComponent))"
-       const name = Component.displayName || Component.name;
-       forwardRef.displayName = `logProps(${name})`;
-
-       return React.forwardRef(forwardRef);
-     }
-     ```
 
    **[⬆ Back to Top](#table-of-contents)**
     
@@ -4131,42 +3912,6 @@ You can download the PDF and Epub version of this repository from the latest run
      }
      ```
      The above function is called “pure” because it does not attempt to change their inputs, and always return the same result for the same inputs. Hence, React has a single rule saying "All React components must act like pure functions with respect to their props."
-
-   **[⬆ Back to Top](#table-of-contents)**
-    
-264. ### How do you say that state updates are merged?
-     When you call setState() in the component, React merges the object you provide into the current state.
-
-     For example, let us take a facebook user with posts and comments details as state variables,
-
-     ```javascript
-       constructor(props) {
-         super(props);
-         this.state = {
-           posts: [],
-           comments: []
-         };
-       }
-     ```
-
-     Now you can update them independently with separate `setState()` calls as below,
-
-     ```javascript
-      componentDidMount() {
-         fetchPosts().then(response => {
-           this.setState({
-             posts: response.posts
-           });
-         });
-
-         fetchComments().then(response => {
-           this.setState({
-             comments: response.comments
-           });
-         });
-       }
-     ```
-     As mentioned in the above code snippets, `this.setState({comments})` updates only comments variable without modifying or replacing `posts` variable.
 
    **[⬆ Back to Top](#table-of-contents)**
     
